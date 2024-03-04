@@ -1,0 +1,341 @@
+/* Created by Brajesh */
+
+* {
+     padding:0;
+     margin:0;
+     box-sizing:border-box;
+     outline:none;
+     -webkit-tap-highlight-color:transparent;
+     user-select:none;
+ }
+ 
+ :root {
+     --N100: hsl(220,20%,95%);
+     --N200: hsl(220,18%,90%);
+     --N300: hsl(220,16%,80%);
+     --N400: hsl(220,14%,70%);
+     --N500: hsl(220,10%,50%);
+     --N600: hsl(220,14%,30%);
+     --N700: hsl(220,16%,20%);
+     --N800: hsl(220,18%,10%);
+     --N900: hsl(220,20%,05%);
+     --P500: hsl(220,80%,50%);
+     --R500: hsl(345,80%,45%);
+ }
+ 
+#wrapper {
+    --key-size:calc((100vw - 7rem)/4 );
+    position:absolute;
+    border-radius:0.5rem;
+    inset:1rem;
+    overflow:hidden;
+}
+
+.icon-map {
+    display:none;
+}
+
+body[data-theme="light"] {
+     --N900: hsl(220,20%,98%);
+     --N800: hsl(220,18%,94%);
+     --N700: hsl(220,16%,86%);
+     --N600: hsl(220,14%,70%);
+     --N500: hsl(220,10%,40%);
+     --N400: hsl(220,14%,30%);
+     --N300: hsl(220,16%,20%);
+     --N200: hsl(220,18%,16%);
+     --N100: hsl(220,20%,10%);
+}
+
+body[data-theme="dark"] {
+    background-color:var(--N900);
+    color:var(--N100);
+}
+
+header {
+    background-color:var(--N800);
+    height:4rem;
+    padding:1rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-radius:0.5rem;
+}
+
+header h3 {
+    color:var(--N100);
+    margin-right:auto;
+    margin-left:0.75rem;
+}
+
+header .icon {
+    color:var(--P500);
+}
+
+header .switch {
+    position:relative;
+    width:2rem;
+    height:1rem;
+    border-radius:999px;
+    box-shadow: 0 0 0 2px var(--N500);
+    transition:all 200ms ease-out;
+}
+
+header .switch::before {
+    content:"";
+    position:absolute;
+    top:0.13rem;
+    left:0.13rem;
+    width:calc(0.74rem);
+    height:calc(0.74rem);
+    border-radius:50%;
+    background-color:var(--N500);
+    transition:all 200ms ease-out;
+}
+
+[data-theme="dark"] header .switch {
+    background-color:var(--P500);
+    box-shadow:0 0 0 2px var(--P500);
+}
+
+[data-theme="dark"] header .switch::before {
+    background-color:var(--N100);
+    transform:translateX(1rem);
+}
+
+.panel {
+    --m:0rem;
+    position:absolute ;
+    left:var(--m);
+    bottom:var(--m);
+    width:calc(100% - 2 * var(--m));
+    border-radius:0.5rem;
+    background-color:var(--N800);
+    transform: translateY(calc(100% - 5rem));
+    transition:transform 200ms ease-out;
+}
+
+.panel[data-show="true"] {
+    transform:none;
+}
+
+.panel .handle {
+    position:relative ;
+    height:2rem;
+    width:5rem;
+    margin:0 auto;
+}
+
+.panel .handle::before {
+    position:absolute;
+    content:"";
+    left:50%;
+    top:50%;
+    height:0.25rem;
+    width:3rem;
+    border-radius:999px;
+    transform:translate(-50%,-50%);
+    background-color:var(--N700);
+}
+
+.panel .handle:hover::before {
+    background-color:var(--P500);
+}
+
+.panel .keypad {
+    position:relative ;
+    padding:1rem;
+    display:grid;
+    gap:1rem;
+    grid-template-columns : repeat(4,var(--key-size)) ;
+    grid-auto-rows: var(--key-size) ;
+}
+
+.panel .action {
+    padding:0 1rem;
+    height:2rem;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.action .key {
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--N600);
+    font-weight:500;
+    padding:1rem;
+    border-radius:0.25rem;
+}
+
+.action .on {
+    background-color:var(--R500);
+    color:white;
+}
+
+.action .clear {
+    background-image:url("#test");
+    color:var(--N500);
+}
+
+.action .clear:hover {
+    background-color:var(--N700);
+    color:var(--N100);
+}
+
+.action > * + * {
+    margin-left:0.5rem;
+}
+
+.keypad .key {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--N500);
+    font-size:2rem;
+    font-weight:500;
+}
+
+.keypad .key.op {
+    color:var(--N200);
+}
+
+.keypad .key:hover {
+    background-color:var(--N700);
+    border-radius:50%;
+    color:var(--N100);
+}
+
+.screen {
+    position:relative;
+    width:100%;
+    height:calc(100% - (4 * var(--key-size) + 14rem));
+    border-radius:0.5rem;
+}
+
+.screen .result {
+    position:absolute ;
+    bottom:0;
+    right:0;
+    font-size:3rem;
+    text-align:right;
+    color:var(--N100);
+    opacity:0;
+    transition:all 300ms ease-out;
+    overflow:auto;
+    width:100%;
+}
+
+.screen .exp {
+    position:absolute ;
+    bottom:0;
+    right:0;
+    font-size:3rem;
+    text-align:right;
+    color:var(--N100);
+    transition:all 300ms ease-out;
+    width:100%;
+    overflow:auto;
+}
+
+.screen[data-show-result="true"] .result {
+    opacity:1;
+}
+
+.screen[data-show-result="true"] .exp {
+    bottom:3.5rem;
+    font-size:1.25rem;
+    color:var(--N500);
+}
+
+.screen[data-show-result="true"] .exp::after{
+    content:" =";
+}
+    
+.history-panel {
+    margin-top:1rem;
+    height:calc(4 * var(--key-size) + 3rem);
+}
+
+.history-panel .head {
+    display:flex;
+    height:2rem;
+    align-items:center;
+    color:var(--N500);
+    font-weight:500;
+}
+
+.head .icon {
+    margin-right:0.5rem;
+}
+
+.body {
+    padding-top:1rem;
+    overflow:auto;
+    height:calc(100% - 2rem);
+}
+
+.body:empty::before {
+    text-align:center;
+    width:100%;
+    padding:1rem;
+    content:"Nothing here";
+    color:var(--N500);
+}
+
+.body .card {
+    padding:1rem;
+    border-radius:0.5rem;
+    display:flex;
+    align-items:center;
+    width:100%;
+}
+
+.body .card:hover {
+    background-color:var(--N800);
+}
+
+.card .content {
+    flex:1;
+    color:var(--N500);
+    overflow:hidden;
+}
+
+.card .content .exp::after {
+    content:"=";
+}
+
+.card .content .result {
+    font-size:2rem;
+    font-weight:500;
+    width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.card .delete {
+    width:2.5rem;
+    height:2.5rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--N500);
+    border-radius:0.25rem;
+    background-color:var(--N700);
+}
+
+.card .delete svg {
+    stroke:currentColor;
+}
+
+.card .delete:hover{
+    background-color:var(--R500);
+    color:white;
+}
+
+.card + .card {
+    margin-top:0.5rem;
+}
+
+
